@@ -76,36 +76,6 @@ paths:
         '500':
           description: Internal Server Error — an error occurred on the server.
 
-    post:
-      summary: Create a new transaction
-      description: Add a new financial transaction for a specific account.
-      operationId: createTransaction
-      tags:
-        - Transactions
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionCreate'
-      responses:
-        '201':
-          description: Transaction created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDetails'
-        '400':
-          description: Bad request — invalid input.
-        '401':
-          description: Unauthorized — authentication is required.
-        '403':
-          description: Forbidden — access denied.
-        '500':
-          description: Internal Server Error — an error occurred on the server.
-
   /transactions/{transactionId}:
     get:
       summary: Get details of a specific transaction
@@ -160,8 +130,6 @@ paths:
             schema:
               $ref: '#/components/schemas/TransactionUpdate'
       responses:
-        '200':
-          description: Transaction updated successfully.
         '204':
           description: No content — transaction updated successfully.
         '400':
@@ -238,30 +206,6 @@ components:
           type: string
           description: The currency code (ISO alpha).
           example: EUR
-
-    TransactionCreate:
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: The ID of the account associated with the new transaction.
-        date:
-          type: string
-          format: datetime
-          example: '2009-11-04T19:55:41Z'
-          description: The date and time of the new transaction.
-        type:
-          type: string
-          description: The type of transaction (e.g., debit, credit).
-        amount:
-          $ref: '#/components/schemas/Amount'
-        category:
-          type: string
-          enum: [Food, Travel, House, Hobbies, Other]
-          description: The category of the new transaction.
-        notes:
-          type: string
-          description: Additional notes about the transaction.
 
     TransactionUpdate:
       type: object
